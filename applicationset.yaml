@@ -6,7 +6,7 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: https://github.com/rdurelli/argocd-apps.git
+      repoURL: https://github.com/backstage-learning-durelli/argocd-apps.git
       revision: HEAD
       directories:
       - path: apps/*
@@ -18,7 +18,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/rdurelli/{{path.basename}}.git
+        repoURL: https://github.com/backstage-learning-durelli/{{path.basename}}.git
         targetRevision: HEAD
         path: k8s
       destination:
