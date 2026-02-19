@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: java-teste-com-ivo-glauber
+  namespace: argocd
+  labels:
+    managed-by: backstage
+    owner: group:default
+  annotations:
+    backstage.io/source-location: "url:https://github.com/backstage-learning-durelli/java-teste-com-ivo-glauber"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/backstage-learning-durelli/java-teste-com-ivo-glauber.git
+    targetRevision: HEAD
+    path: k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: java-teste-com-ivo-glauber
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
