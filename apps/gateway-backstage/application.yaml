@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gateway-backstage
+  namespace: argocd
+  labels:
+    managed-by: backstage
+    owner: group:default
+    type: gateway
+  annotations:
+    backstage.io/source-location: "url:https://github.com/backstage-learning-durelli/gateway-backstage"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/backstage-learning-durelli/gateway-backstage.git
+    targetRevision: HEAD
+    path: k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gateway-backstage
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
